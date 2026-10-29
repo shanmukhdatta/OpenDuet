@@ -81,8 +81,10 @@ identifies_as_openbot() {
         | grep -q '"licenseStatus"'
       ;;
     app)
+      # The app's title is branded OpenDuet; the stable meta marker is shared with start.sh.
+      # Keep the legacy OpenBot title as a fallback for older deployments.
       curl -fsS --max-time 3 "http://localhost:$port/" 2>/dev/null \
-        | grep -qi '<title>[^<]*OpenBot'
+        | grep -qiE '<meta name="openbot" content="app"|<title>[^<]*OpenBot'
       ;;
   esac
 }
